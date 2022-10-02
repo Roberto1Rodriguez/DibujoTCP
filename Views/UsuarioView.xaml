@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DibujoTCP.Views"
         mc:Ignorable="d"
         Title="UsuarioView" Height="450" Width="800">
-    <Grid>
+    <Canvas Name="MyCanvas">
         
-    </Grid>
+    </Canvas>
 </Window>
