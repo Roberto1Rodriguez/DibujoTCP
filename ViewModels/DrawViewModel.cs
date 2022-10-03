@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,53 +18,57 @@ namespace DibujoTCP.ViewModels
 {
     public class DrawViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<Rectangulo> rec;
+        public ObservableCollection<Rectangulo> Rec
+        {
+            get { return rec; }
+            set { rec = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Rec")); }
 
+        }
         private UsuarioView usuario;
         public string Error { get; set; } = "";
         public ICommand AgregarRectanguloCommand { get; set; }
         public ICommand AgregarEllipseCommand { get; set; }
         public ICommand ver { get; set; }
-        private Datos datos;
-        public Datos Datos
+        private Rectangulo datos;
+        public Rectangulo Datos
         {
             get { return datos; }
             set { datos = value; PropertyChanged?.Invoke(this,new PropertyChangedEventArgs("Datos"));}
         }
         public DrawViewModel()
         {
+            rec = new ObservableCollection<Rectangulo>();
             ver = new RelayCommand(verdibujo);
             AgregarRectanguloCommand = new RelayCommand(Rectangulo);
-            AgregarEllipseCommand = new RelayCommand(Ellipse);
+           
         }
         public void verdibujo()
         {
-            Datos = new Datos();
+            Datos = new Rectangulo();
             usuario = new UsuarioView();
             usuario.DataContext = this;
             usuario.ShowDialog();
         }
         public void Rectangulo()
         {
-            SolidColorBrush colores = (SolidColorBrush)new BrushConverter().ConvertFromString(datos.color);
-           Canvas myCanvas1 = new Canvas();
-            myCanvas1.Background = colores;
-            myCanvas1.Height = datos.Alto;
-            myCanvas1.Width = datos.Ancho;
-            Canvas.SetTop(myCanvas1, datos.CoordenadaY);
-            Canvas.SetLeft(myCanvas1, datos.CoordenadaX);
-            usuario.MyCanvas.Children.Add(myCanvas1);
+            if (Datos != null)
+            {
+                rec.Add(Datos);
+                PropertyChange();
+                Datos = new Rectangulo();
+            }
         }
-        public void Ellipse()
+        public void Enviar()
         {
-            SolidColorBrush colores = (SolidColorBrush)new BrushConverter().ConvertFromString(datos.color);
-            Ellipse ellipse = new Ellipse();
-            ellipse.Fill = colores;
-            ellipse.Height = datos.Alto;
-            ellipse.Width = datos.Ancho;
-            Canvas.SetTop(ellipse, datos.CoordenadaY);
-            Canvas.SetLeft(ellipse, datos.CoordenadaX);
-            usuario.MyCanvas.Children.Add(ellipse);
+            
         }
+        private void PropertyChange(string v = null)
+        {
+            PropertyChanged?.Invoke(this,
+               new PropertyChangedEventArgs(v));
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

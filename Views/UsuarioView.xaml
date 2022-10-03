@@ -16,10 +16,29 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Canvas Name="MyCanvas" Height="auto">
-            
-            
-        </Canvas>
+        <ItemsControl ItemsSource="{Binding Rec}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding CoordenadaX}">
+                        
+                    </Setter>
+                    <Setter Property="Canvas.Top" Value="{Binding CoordenadaY}"></Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle  Width="{Binding Alto}" Height="{Binding Ancho}" Fill="{Binding color}">
+                        
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <StackPanel Grid.Column="1">
             <Label>Alto</Label>
             <TextBox Text="{Binding Datos.Alto}"></TextBox>

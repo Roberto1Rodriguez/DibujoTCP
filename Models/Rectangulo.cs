@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DibujoTCP.Models
 {
-    public class Datos
+    public class Rectangulo
     {
         public int Alto { get; set; }
         public int Ancho { get; set; }

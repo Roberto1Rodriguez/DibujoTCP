@@ -50,9 +50,14 @@ namespace DibujoTCP.Services
         }
         void Enviar(TcpClient Cliente, byte[] buffer)
         {
-
+            if (Cliente.Connected)
+            {
+                var stream = Cliente.GetStream();
+                stream.Write(buffer,0,buffer.Length);
+            }
         }
-        public event Action<Datos>? UsuarioConectado;
+        public event Action<Rectangulo>? UsuarioConectado;
+        
         void Recibir(object? tcpClient)
         {
             if (tcpClient != null)
@@ -72,7 +77,7 @@ namespace DibujoTCP.Services
                                 Enviar(x, buffer);
                             }
                         });
-                        var usuario = JsonConvert.DeserializeObject<Datos>(System.Text.Encoding.UTF8.GetString(buffer));
+                        var usuario = JsonConvert.DeserializeObject<Rectangulo>(System.Text.Encoding.UTF8.GetString(buffer));
                         if (usuario != null)
                         {
                             UsuarioConectado?.Invoke(usuario);
