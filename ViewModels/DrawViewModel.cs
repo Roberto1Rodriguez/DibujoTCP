@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
+
 namespace DibujoTCP.ViewModels
 {
     public class DrawViewModel : INotifyPropertyChanged
@@ -21,6 +23,7 @@ namespace DibujoTCP.ViewModels
         private UsuarioView usuario;
         public string Error { get; set; } = "";
         public ICommand AgregarRectanguloCommand { get; set; }
+        public ICommand AgregarEllipseCommand { get; set; }
         public ICommand ver { get; set; }
         private Datos datos;
         public Datos Datos
@@ -32,22 +35,36 @@ namespace DibujoTCP.ViewModels
         {
             ver = new RelayCommand(verdibujo);
             AgregarRectanguloCommand = new RelayCommand(Rectangulo);
+            AgregarEllipseCommand = new RelayCommand(Ellipse);
         }
         public void verdibujo()
         {
+            Datos = new Datos();
             usuario = new UsuarioView();
             usuario.DataContext = this;
             usuario.ShowDialog();
         }
         public void Rectangulo()
         {
+            SolidColorBrush colores = (SolidColorBrush)new BrushConverter().ConvertFromString(datos.color);
            Canvas myCanvas1 = new Canvas();
-            myCanvas1.Background = datos.color;
-            myCanvas1.Height = 100;
-            myCanvas1.Width = 100;
-            Canvas.SetTop(myCanvas1, 0);
-            Canvas.SetLeft(myCanvas1, 0);
+            myCanvas1.Background = colores;
+            myCanvas1.Height = datos.Alto;
+            myCanvas1.Width = datos.Ancho;
+            Canvas.SetTop(myCanvas1, datos.CoordenadaY);
+            Canvas.SetLeft(myCanvas1, datos.CoordenadaX);
             usuario.MyCanvas.Children.Add(myCanvas1);
+        }
+        public void Ellipse()
+        {
+            SolidColorBrush colores = (SolidColorBrush)new BrushConverter().ConvertFromString(datos.color);
+            Ellipse ellipse = new Ellipse();
+            ellipse.Fill = colores;
+            ellipse.Height = datos.Alto;
+            ellipse.Width = datos.Ancho;
+            Canvas.SetTop(ellipse, datos.CoordenadaY);
+            Canvas.SetLeft(ellipse, datos.CoordenadaX);
+            usuario.MyCanvas.Children.Add(ellipse);
         }
         public event PropertyChangedEventHandler? PropertyChanged;
     }
