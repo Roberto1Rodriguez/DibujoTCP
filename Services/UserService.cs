@@ -49,21 +49,10 @@ namespace DibujoTCP.Services
                 catch (Exception)
                 {
 
-                }
-             
-               
+                } 
             }
         }
-        public void Detener()
-        {
-            if (server != null)
-            {
-                server.Stop();
-                server= null;
-                
-
-            }
-        }
+    
         public event Action<Rectangulo>? UsuarioConectado;
         
        public void Recibir(object? tcpClient)
@@ -99,6 +88,14 @@ namespace DibujoTCP.Services
 
             }
 
+        }
+        public void Detener()
+        {
+            if (server != null)
+            {
+                server.Stop();
+                server = null;
+            }
         }
     }
 }

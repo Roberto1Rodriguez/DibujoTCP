@@ -32,19 +32,21 @@ namespace DibujoTCP.ViewModels
             set { rec = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Rec")); }
 
         }
-        ClientService cliente;
-        private UsuarioView usuarioview;
         private ServidorView servidorview;
         public string Error { get; set; } = "";
+        ClientService cliente;
+        private UsuarioView usuarioview;
+      
         public ICommand AgregarRectanguloCommand { get; set; }
         public ICommand IniciarCliente { get; set; }
         public ICommand IniciarServer { get; set; }
         public ICommand DetenerCommand { get; set; }
+
         private Rectangulo datos;
         public Rectangulo Datos
         {
             get { return datos; }
-            set { datos = value; PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Datos)));}
+            set { datos = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Datos))); }
         }
         private Usuario usuario;
         public Usuario Usuario
@@ -52,8 +54,7 @@ namespace DibujoTCP.ViewModels
             get { return usuario; }
             set { usuario = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Usuario))); }
         }
-        
-       
+
         public DrawViewModel()
         {
             usuario = new Usuario();
@@ -65,6 +66,7 @@ namespace DibujoTCP.ViewModels
             server.UsuarioConectado += Server_UsuarioConectado;
  
         }
+
         public void Server_UsuarioConectado(Rectangulo obj)
         {
             App.Current.Dispatcher.Invoke((Action)delegate
@@ -73,10 +75,7 @@ namespace DibujoTCP.ViewModels
             });
 
         }
-        public void Detener()
-        {
-            server.Detener();
-        }
+  
         public void IniciarServidor()
         {
             server.Iniciar();
@@ -91,7 +90,7 @@ namespace DibujoTCP.ViewModels
             }
             
         }
-   
+   //metodo para instanciar un nuevo cliente
         public void Dibujar()
         {
              
@@ -117,7 +116,7 @@ namespace DibujoTCP.ViewModels
                 usuarioview.DataContext = this;
                 usuarioview.ShowDialog();
             }
-
+        //Manda el rectangulo al lienzo
         public void Rectangulo()
         {
             Error = "";
@@ -137,6 +136,12 @@ namespace DibujoTCP.ViewModels
             
             cliente.Enviar(datos);
           
+        }
+
+        //Detiene el servidor
+        public void Detener()
+        {
+            server.Detener();
         }
 
         void PropertyChange(string? propiedad = null)
