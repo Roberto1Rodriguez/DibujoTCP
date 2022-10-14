@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DibujoTCP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,9 @@ namespace DibujoTCP.Views
             InitializeComponent();
         }
 
-       
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ((DrawViewModel)this.DataContext).DetenerServidorCommand.Execute(null);
+        }
     }
 }

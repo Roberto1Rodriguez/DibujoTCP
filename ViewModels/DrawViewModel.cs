@@ -40,8 +40,8 @@ namespace DibujoTCP.ViewModels
         public ICommand AgregarRectanguloCommand { get; set; }
         public ICommand IniciarCliente { get; set; }
         public ICommand IniciarServer { get; set; }
-        public ICommand DetenerCommand { get; set; }
-
+        public ICommand DetenerServidorCommand { get; set; }
+        public ICommand DetenerClienteCommand { get; set; }
         private Rectangulo datos;
         public Rectangulo Datos
         {
@@ -62,8 +62,9 @@ namespace DibujoTCP.ViewModels
             IniciarCliente = new RelayCommand(Dibujar);
             IniciarServer = new RelayCommand(IniciarServidor);
             AgregarRectanguloCommand = new RelayCommand(Rectangulo);
-            DetenerCommand = new RelayCommand(Detener); 
+            DetenerServidorCommand = new RelayCommand(DetenerServidor); 
             server.UsuarioConectado += Server_UsuarioConectado;
+            DetenerClienteCommand = new RelayCommand(DetenerCliente);
  
         }
 
@@ -139,9 +140,13 @@ namespace DibujoTCP.ViewModels
         }
 
         //Detiene el servidor
-        public void Detener()
+        public void DetenerServidor()
         {
             server.Detener();
+        }
+        public void DetenerCliente()
+        {
+            cliente.Cerrar();
         }
 
         void PropertyChange(string? propiedad = null)

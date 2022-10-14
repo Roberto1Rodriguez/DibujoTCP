@@ -26,7 +26,7 @@ namespace DibujoTCP.Services
                 Thread hilo1 = new Thread(new ThreadStart(Escuchar));
                 hilo1.IsBackground = true;
                 hilo1.Start();
-               
+           
             }
            
         }

@@ -30,7 +30,7 @@ namespace DibujoTCP.Views
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            ((DrawViewModel)this.DataContext).DetenerCommand.Execute(null);
+            ((DrawViewModel)this.DataContext).DetenerServidorCommand.Execute(null);
         }
     }
 }

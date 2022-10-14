@@ -7,7 +7,7 @@
   xmlns:color="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:vm="clr-namespace:DibujoTCP.ViewModels"
         mc:Ignorable="d"
-        Title="Agregar" Height="450" Width="800">
+        Title="Agregar" Height="450" Width="800" Closed="Window_Closed">
     <Window.DataContext>
         <vm:DrawViewModel></vm:DrawViewModel>
     </Window.DataContext>

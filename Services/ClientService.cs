@@ -22,6 +22,7 @@ namespace DibujoTCP.Services
             client.Connect(ipe);
             Thread.Sleep(1000);
             Enviar(rect);
+
         }
 
         public void Enviar(Rectangulo rect)
