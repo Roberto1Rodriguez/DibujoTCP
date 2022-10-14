@@ -75,7 +75,7 @@
                                  Margin="20,0,0,0"></TextBox>
                         </WrapPanel>
                         <WrapPanel Margin="0,0,0,5">
-                            <Label>Direccion ip:</Label>
+                            <Label>Direccion ip</Label>
                             <TextBox Text="{Binding Usuario.ip}" Width="200"
                                  Height="25"
                                  Padding="1"
