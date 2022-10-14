@@ -4,54 +4,161 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DibujoTCP.Views"
+  xmlns:color="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:vm="clr-namespace:DibujoTCP.ViewModels"
         mc:Ignorable="d"
-        Title="UsuarioView" Height="450" Width="800">
+        Title="Agregar" Height="450" Width="800">
     <Window.DataContext>
         <vm:DrawViewModel></vm:DrawViewModel>
     </Window.DataContext>
-    <Grid>
+    <Window.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding Rec}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas>
-                    </Canvas>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding CoordenadaX}">
-                        
-                    </Setter>
-                    <Setter Property="Canvas.Top" Value="{Binding CoordenadaY}"></Setter>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Rectangle  Width="{Binding Alto}" Height="{Binding Ancho}" Fill="{Binding color}">
-                        
-                    </Rectangle>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <StackPanel Grid.Column="1">
-            <Label>Alto</Label>
-            <TextBox Text="{Binding Datos.Alto}"></TextBox>
-            <Label>Ancho</Label>
-            <TextBox Text="{Binding Datos.Ancho}"></TextBox>
-            <Label>X</Label>
-            <TextBox Text="{Binding Datos.CoordenadaX}"></TextBox>
-            <Label>Y</Label>
-            <TextBox Text="{Binding Datos.CoordenadaY}"></TextBox>
-            <Label>Color</Label>
-            <TextBox Text="{Binding Datos.color}"></TextBox>
-            <Button Height="50" Command="{Binding AgregarRectanguloCommand}">Agregar Rectangulo</Button>
-            <Button Height="50" Margin="0,10,0,0"  Command="{Binding AgregarEllipseCommand}">Agregar Ellipse</Button>
-        </StackPanel>
+      
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,8"></Setter>
+            <Setter Property="Width" Value="70"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <VisualBrush>
+                <VisualBrush.Visual>
+                    <Grid Background="#0088e8">
+                        <Path Fill="#d1da27"
+              Data="M-60,100
+              C30,60 80,-295 100,100" 
+              RenderTransformOrigin="0.5,0.5" 
+              Stretch="Fill"
+              Margin="0,110,0,0"></Path>
+                        <Path Fill="#e6ff2d"
+              Data="M850,150
+              C450,150 650,-400 200,150" 
+              RenderTransformOrigin="0.5,0.5" 
+              Stretch="Fill"
+              Margin="0,155,240,0"></Path>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Grid.Background>
+        <Border Width="650"
+                Height="300"
+                Background="#fff4e1"
+                CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <WrapPanel >
+                        <TextBlock>Ancho</TextBlock>
+                        <WrapPanel>
+                            <Slider Name="sliderAncho" 
+                                Width="150"
+                                 
+                                Maximum="255" 
+                                Value="{Binding Datos.Ancho}" 
+                                ></Slider>
+                            <TextBox IsEnabled="False" 
+                                     TextAlignment="Center" 
+                                     Text="{Binding ElementName=sliderAncho, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </WrapPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock>Alto</TextBlock>
+                        <WrapPanel>
+                            <Slider Name="sliderAlto"
+                                Width="150"
+                                 
+                                Maximum="255" 
+                               Value="{Binding Datos.Alto}"  
+                                ></Slider>
+                            <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderAlto, Path=Value, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                        </WrapPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock>Posicion X</TextBlock>
+                        <WrapPanel>
+                            <Slider Name="sliderX"
+                                Width="150"
+                                Maximum="255" 
+                               Value="{Binding Datos.CoordenadaX}" 
+                                ></Slider>
+                            <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderX, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </WrapPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock>Posicion Y</TextBlock>
+                        <WrapPanel>
+                            <Slider Name="sliderY"
+                                Width="150"
+                                Maximum="255" 
+                             Value="{Binding Datos.CoordenadaY}" 
+                     ></Slider>
+                            <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderY, Path=Value, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                        </WrapPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock>Color</TextBlock>
+                        <color:ColorPicker Width="200"
+                                                 Height="30"
+                                                 Margin="0,0,0,0"
+                                               SelectedColor="{Binding Datos.color}">
+                        </color:ColorPicker>
+                    </WrapPanel>
+                    <TextBlock Foreground="Red"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center" Text="{Binding Error}"></TextBlock>
+
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+
+                    <Image Source="/Assets/monito1.png" 
+                           Width="250"
+                           Margin="10"
+                           RenderTransformOrigin=".5,.5">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="rotar"></RotateTransform>
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation BeginTime="00:00:00"
+                                                         Duration="00:00:10"
+                                                         From="0"
+                                                         To="360"
+                                                         RepeatBehavior="Forever"
+                                                         Storyboard.TargetName="rotar"
+                                                         Storyboard.TargetProperty="Angle">
+
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+
+                    </Image>
+
+
+                    <Button Margin="95,10,0,0"
+                                Command="{Binding AgregarRectanguloCommand}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">Dibujar</Button>
+
+
+                </StackPanel>
+            </Grid>
+
+        </Border>
     </Grid>
 </Window>

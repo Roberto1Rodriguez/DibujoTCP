@@ -7,10 +7,4 @@
         xmlns:vm="clr-namespace:DibujoTCP.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:DrawViewModel></vm:DrawViewModel>
-    </Window.DataContext>
-    <Grid>
-        <Button Command="{Binding ver}">ver</Button>
-    </Grid>
 </Window>

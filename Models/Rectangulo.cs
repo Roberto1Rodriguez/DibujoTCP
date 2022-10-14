@@ -8,11 +8,12 @@ namespace DibujoTCP.Models
 {
     public class Rectangulo
     {
-        public int Alto { get; set; }
-        public int Ancho { get; set; }
-        public int CoordenadaY { get; set; }
-        public int CoordenadaX { get; set; }
-        public string color { get; set; } = "";
+        public string? Nombre { get; set; }
+        public int Alto { get; set; } = 50;
+        public int Ancho { get; set; } = 50;
+        public int CoordenadaY { get; set; } = 10;
+        public int CoordenadaX { get; set; } = 10;
+        public string color { get; set; } = "#808080";
 
     }
 }

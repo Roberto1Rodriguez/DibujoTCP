@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace DibujoTCP.Models
 {
     public class Usuario
-    {
-        public string? Nombre { get; set; }
+    { 
         public string? ip { get; set; }
+        public string? nombre { get; set; }
     }
 }

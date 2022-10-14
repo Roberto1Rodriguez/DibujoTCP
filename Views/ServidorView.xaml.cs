@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,19 +11,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DibujoTCP.Services;
+using DibujoTCP.ViewModels;
 
 namespace DibujoTCP.Views
 {
     /// <summary>
-    /// Lógica de interacción para UsuarioView.xaml
+    /// Lógica de interacción para ServidorView.xaml
     /// </summary>
-    public partial class UsuarioView : Window
+    public partial class ServidorView : Window
     {
-        public UsuarioView()
+        public ServidorView()
         {
             InitializeComponent();
         }
 
-       
+     
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ((DrawViewModel)this.DataContext).DetenerCommand.Execute(null);
+        }
     }
 }

@@ -2,12 +2,14 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xceed.Wpf.Toolkit;
 
 namespace DibujoTCP.Services
 {
@@ -17,27 +19,39 @@ namespace DibujoTCP.Services
         List<TcpClient> clients = new List<TcpClient>();
         public void Iniciar()
         {
-            if (server==null)
+            if (server == null)
             {
-                IPEndPoint ipe = new IPEndPoint(IPAddress.Any, 20012);
+                IPEndPoint ipe = new IPEndPoint(IPAddress.Any, 20000);
                 server = new TcpListener(ipe);
                 Thread hilo1 = new Thread(new ThreadStart(Escuchar));
                 hilo1.Start();
+               
             }
+           
         }
 
         void Escuchar()
         {
             if (server != null)
             {
-                server.Start();
-                while (server.Server.IsBound)
+                try
                 {
-                    var clienteNuevo = server.AcceptTcpClient();
-                    clients.Add(clienteNuevo);
-                    Thread hiloRecibir = new Thread(new ParameterizedThreadStart(Recibir));
-                    hiloRecibir.Start(clienteNuevo);
+                    server.Start();
+                    while (server.Server.IsBound && server != null)
+                    {
+                        var clienteNuevo = server.AcceptTcpClient();
+                        clients.Add(clienteNuevo);
+                        Thread hiloRecibir = new Thread(new ParameterizedThreadStart(Recibir));
+                        hiloRecibir.Start(clienteNuevo);
+
+                    }
                 }
+                catch (Exception)
+                {
+
+                }
+             
+               
             }
         }
         public void Detener()
@@ -45,46 +59,44 @@ namespace DibujoTCP.Services
             if (server != null)
             {
                 server.Stop();
-                server = null;
-            }
-        }
-        void Enviar(TcpClient Cliente, byte[] buffer)
-        {
-            if (Cliente.Connected)
-            {
-                var stream = Cliente.GetStream();
-                stream.Write(buffer,0,buffer.Length);
+                server= null;
+                
+
             }
         }
         public event Action<Rectangulo>? UsuarioConectado;
         
-        void Recibir(object? tcpClient)
+       public void Recibir(object? tcpClient)
         {
-            if (tcpClient != null)
+            try
             {
-                TcpClient cliente = (TcpClient)tcpClient;
-                var stream = cliente.GetStream();
-                while (cliente.Connected)
+
+
+
+                if (tcpClient != null)
                 {
-                    if (cliente.Available > 0)//si hay algun byte disponible
+                    TcpClient cliente = (TcpClient)tcpClient;
+                    var stream = cliente.GetStream();
+                    while (cliente.Connected)
                     {
-                        byte[] buffer = new byte[cliente.Available];
-                        stream.Read(buffer, 0, buffer.Length);
-                        clients.ForEach(x =>
+                        if (cliente.Available > 0)//si hay algun byte disponible
                         {
-                            if (x != cliente)
+                            byte[] buffer = new byte[cliente.Available];
+                            stream.Read(buffer, 0, buffer.Length);
+
+                            var rect = JsonConvert.DeserializeObject<Rectangulo>(System.Text.Encoding.UTF8.GetString(buffer));
+                            if (rect != null)
                             {
-                                Enviar(x, buffer);
+                                UsuarioConectado?.Invoke(rect);
                             }
-                        });
-                        var usuario = JsonConvert.DeserializeObject<Rectangulo>(System.Text.Encoding.UTF8.GetString(buffer));
-                        if (usuario != null)
-                        {
-                            UsuarioConectado?.Invoke(usuario);
                         }
+                        Thread.Sleep(1000);
                     }
-                    Thread.Sleep(1000);
                 }
+            }
+            catch (Exception)
+            {
+
             }
 
         }
