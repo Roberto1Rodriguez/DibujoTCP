@@ -28,8 +28,8 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
+                    <TextBlock TextAlignment="Center" Text="{Binding Nombre}" FontWeight="Bold" ></TextBlock>
                     <Rectangle Width="{Binding Alto}" Height="{Binding Ancho}" Fill="{Binding color}"></Rectangle>
-                    <TextBlock VerticalAlignment="Bottom" TextAlignment="Center" Text="{Binding Nombre}" FontWeight="Bold" ></TextBlock>
                 </StackPanel>
             </DataTemplate>
         </ItemsControl.ItemTemplate>

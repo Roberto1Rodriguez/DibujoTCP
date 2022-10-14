@@ -64,7 +64,7 @@
                             <Slider Name="sliderAncho" 
                                 Width="150"
                                  
-                                Maximum="255" 
+                                Maximum="800" 
                                 Value="{Binding Datos.Ancho}" 
                                 ></Slider>
                             <TextBox IsEnabled="False" 
@@ -78,7 +78,7 @@
                             <Slider Name="sliderAlto"
                                 Width="150"
                                  
-                                Maximum="255" 
+                                 Maximum="800" 
                                Value="{Binding Datos.Alto}"  
                                 ></Slider>
                             <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderAlto, Path=Value, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
@@ -89,7 +89,7 @@
                         <WrapPanel>
                             <Slider Name="sliderX"
                                 Width="150"
-                                Maximum="255" 
+                                Maximum="800" 
                                Value="{Binding Datos.CoordenadaX}" 
                                 ></Slider>
                             <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderX, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -100,7 +100,7 @@
                         <WrapPanel>
                             <Slider Name="sliderY"
                                 Width="150"
-                                Maximum="255" 
+                               Maximum="800" 
                              Value="{Binding Datos.CoordenadaY}" 
                      ></Slider>
                             <TextBox  IsEnabled="False" TextAlignment="Center" Text="{Binding ElementName=sliderY, Path=Value, UpdateSourceTrigger=PropertyChanged}" ></TextBox>

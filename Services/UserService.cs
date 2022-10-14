@@ -24,6 +24,7 @@ namespace DibujoTCP.Services
                 IPEndPoint ipe = new IPEndPoint(IPAddress.Any, 20000);
                 server = new TcpListener(ipe);
                 Thread hilo1 = new Thread(new ThreadStart(Escuchar));
+                hilo1.IsBackground = true;
                 hilo1.Start();
                
             }
@@ -48,7 +49,7 @@ namespace DibujoTCP.Services
                 }
                 catch (Exception)
                 {
-
+                    
                 } 
             }
         }
@@ -59,9 +60,6 @@ namespace DibujoTCP.Services
         {
             try
             {
-
-
-
                 if (tcpClient != null)
                 {
                     TcpClient cliente = (TcpClient)tcpClient;

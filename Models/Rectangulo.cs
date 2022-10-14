@@ -13,7 +13,7 @@ namespace DibujoTCP.Models
         public int Ancho { get; set; } = 50;
         public int CoordenadaY { get; set; } = 10;
         public int CoordenadaX { get; set; } = 10;
-        public string color { get; set; } = "#808080";
+        public string color { get; set; } = "#2986cc";
 
     }
 }
